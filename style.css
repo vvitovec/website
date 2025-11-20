@@ -87,9 +87,16 @@ a:hover {
   display: none;
   border: 1px solid var(--border);
   background: var(--card);
-  padding: 8px 10px;
-  border-radius: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
   font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.menu-toggle:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
 
 .hero {
@@ -490,6 +497,77 @@ a:hover {
   color: #e5e7eb;
   padding: 20px 0;
   text-align: center;
+}
+
+/* Mobile navigation */
+@media (max-width: 768px) {
+  .header-inner {
+    position: relative;
+    gap: 12px;
+  }
+
+  .menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 14px;
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.25);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+    z-index: 9;
+  }
+
+  body.menu-open::before {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .main-nav {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    left: 0;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    padding: 10px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-6px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    z-index: 10;
+  }
+
+  .main-nav ul {
+    display: grid;
+    gap: 6px;
+  }
+
+  .main-nav a {
+    display: block;
+    padding: 14px 12px;
+    border-radius: 12px;
+  }
+
+  .main-nav.open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
 }
 
 .easyflex-hero {
