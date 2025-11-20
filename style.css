@@ -213,6 +213,11 @@ a:hover {
   background: var(--muted);
 }
 
+.section.accent {
+  background: linear-gradient(135deg, #eef2ff, #f8fafc);
+  border-block: 1px solid var(--border);
+}
+
 .section h2 {
   margin-top: 0;
   margin-bottom: 16px;
