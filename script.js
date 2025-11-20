@@ -9,6 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
     menuToggle.addEventListener('click', () => {
       const isOpen = nav.classList.toggle('open');
       menuToggle.setAttribute('aria-expanded', String(isOpen));
+      menuToggle.textContent = isOpen ? '✕' : '☰';
+      menuToggle.setAttribute('aria-label', isOpen ? 'Zavřít menu' : 'Otevřít menu');
+      document.body.classList.toggle('menu-open', isOpen);
     });
 
     // Zavřít menu po kliknutí na odkaz na mobilu
@@ -17,6 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (nav.classList.contains('open')) {
           nav.classList.remove('open');
           menuToggle.setAttribute('aria-expanded', 'false');
+          menuToggle.textContent = '☰';
+          menuToggle.setAttribute('aria-label', 'Otevřít menu');
+          document.body.classList.remove('menu-open');
         }
       });
     });
