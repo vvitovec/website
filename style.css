@@ -3,10 +3,13 @@
   --primary-strong: #4338ca;
   --bg: #f7f7fb;
   --text: #0f172a;
+  --text-muted: #475569;
   --muted: #eef0f6;
   --card: #ffffff;
+  --surface-2: #f8fafc;
   --border: #e5e7eb;
   --shadow: 0 10px 35px rgba(15, 23, 42, 0.08);
+  --shadow-soft: 0 12px 30px rgba(15, 23, 42, 0.06);
 }
 
 * {
@@ -22,8 +25,43 @@ body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   color: var(--text);
   background: var(--bg);
-  line-height: 1.7;
-  letter-spacing: 0.02em;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0 0 12px;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+h1 {
+  font-size: clamp(2.2rem, 3vw + 1rem, 3rem);
+  line-height: 1.15;
+}
+
+h2 {
+  font-size: clamp(1.8rem, 2vw + 1rem, 2.2rem);
+}
+
+h3 {
+  font-size: 1.35rem;
+}
+
+h4 {
+  font-size: 1.15rem;
+}
+
+p,
+.body {
+  font-size: 1rem;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  color: var(--text);
 }
 
 a {
@@ -53,7 +91,7 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 0;
+  padding: 16px 0;
 }
 
 .brand {
@@ -63,7 +101,7 @@ a:hover {
 
 .main-nav ul {
   display: flex;
-  gap: 20px;
+  gap: 24px;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -71,8 +109,8 @@ a:hover {
 
 .main-nav a {
   font-weight: 600;
-  padding: 10px 12px;
-  border-radius: 8px;
+  padding: 12px 14px;
+  border-radius: 10px;
   transition: background 0.2s ease;
 }
 
@@ -87,7 +125,7 @@ a:hover {
   display: none;
   border: 1px solid var(--border);
   background: var(--card);
-  padding: 10px 12px;
+  padding: 12px 14px;
   border-radius: 12px;
   font-size: 1rem;
   cursor: pointer;
@@ -100,25 +138,23 @@ a:hover {
 }
 
 .hero {
-  padding: 80px 0 70px;
+  padding: 96px 0 80px;
 }
 
 .hero-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 28px;
+  gap: 32px;
   align-items: center;
 }
 
 .hero h1 {
-  font-size: clamp(2.1rem, 3vw + 1rem, 3rem);
-  margin: 12px 0;
-  line-height: 1.2;
+  margin: 0 0 16px;
 }
 
 .hero .lead {
-  font-size: 1.07rem;
-  color: #334155;
+  font-size: 1.12rem;
+  color: var(--text-muted);
 }
 
 .hero-card,
@@ -145,6 +181,8 @@ a:hover {
 
 .lead {
   margin-bottom: 16px;
+  line-height: 1.7;
+  color: var(--text-muted);
 }
 
 .profile-list {
@@ -153,7 +191,7 @@ a:hover {
   margin: 10px 0 16px;
   display: grid;
   gap: 8px;
-  color: #475569;
+  color: var(--text-muted);
 }
 
 .contact-inline {
@@ -170,9 +208,9 @@ a:hover {
 
 .actions {
   display: flex;
-  gap: 12px;
+  gap: 16px;
   flex-wrap: wrap;
-  margin-top: 18px;
+  margin-top: 16px;
 }
 
 .button {
@@ -251,7 +289,7 @@ a:hover {
 }
 
 .section {
-  padding: 70px 0;
+  padding: 80px 0;
 }
 
 .section.muted {
@@ -266,21 +304,20 @@ a:hover {
 .section h2 {
   margin-top: 0;
   margin-bottom: 16px;
-  font-size: 1.8rem;
 }
 
 .section-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 20px;
+  gap: 24px;
   flex-wrap: wrap;
 }
 
 .two-col {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 26px;
+  gap: 24px;
   align-items: center;
 }
 
@@ -298,7 +335,7 @@ a:hover {
 
 .cards {
   display: grid;
-  gap: 26px;
+  gap: 24px;
 }
 
 .cards.three {
@@ -312,7 +349,7 @@ a:hover {
 .card {
   background: var(--card);
   border-radius: 14px;
-  padding: 22px;
+  padding: 24px;
   border: 1px solid var(--border);
   box-shadow: var(--shadow);
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
@@ -362,7 +399,7 @@ a:hover {
   border: 1px solid var(--border);
   display: grid;
   place-items: center;
-  padding: 10px;
+  padding: 16px;
 }
 
 .project-cover svg {
@@ -377,7 +414,7 @@ a:hover {
   gap: 8px;
   padding: 12px;
   border-radius: 12px;
-  background: #f8fafc;
+  background: var(--surface-2);
   border: 1px solid var(--border);
 }
 
@@ -389,7 +426,7 @@ a:hover {
 }
 
 .meta-label {
-  color: #475569;
+  color: var(--text-muted);
 }
 
 .meta-value {
@@ -398,16 +435,16 @@ a:hover {
 
 .project-actions {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   flex-wrap: wrap;
 }
 
 .highlight-box {
-  background: var(--card);
-  padding: 22px;
+  background: var(--surface-2);
+  padding: 24px;
   border-radius: 14px;
   border: 1px solid var(--border);
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-soft);
 }
 
 .contact-block {
@@ -418,7 +455,7 @@ a:hover {
 }
 
 .contact-note {
-  color: #475569;
+  color: var(--text-muted);
 }
 
 .list {
