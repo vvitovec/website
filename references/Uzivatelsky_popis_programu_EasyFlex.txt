@@ -1,0 +1,132 @@
+# Uživatelský popis programu EasyFlex
+
+## Přehled funkcí
+- EasyFlex zrychluje opsání údajů z faktur: dokáže extrahovat PDF přes OpenAI Vision, načíst tabulky CSV/XLSX/XML, ručně upravovat buňky a importovat vybrané řádky do ABRA Flexi [README.md:1-12].
+- Aplikace pracuje jen se souhrnnými částkami DPH (0 %, 12 %, 21 %) a základními identifikačními údaji; položky řádků faktury se neřeší [README.md:10-12][EasyFlex/invoice_processor.py:16-69].
+
+## Požadavky na systém
+- Windows 10/11 64‑bit, internetové připojení pro OpenAI a ABRA API, při běhu ze zdrojáků Python 3.10+ [README.md:16-21].
+- Pro konverzi PDF je potřeba Poppler (je přibalený, případně nastavte `POPPLER_PATH`) [README.md:22-23][EasyFlex/config.py:264-300].
+
+## Instalace a aktualizace
+### Varianta A – hotové balíčky
+1. Stáhněte si archiv `EasyFlex-Windows.zip` / `EasyFlex-macOS.tar.gz`.
+2. Windows: rozbalte a spusťte `EasyFlex.exe`. macOS: rozbalte, přetáhněte `EasyFlex.app` do `/Applications` a při prvním spuštění potvrďte důvěru aplikaci [README.md:28-31].
+3. Nastavení a logy se ukládají do `%APPDATA%\EasyFlex` (Windows) nebo `~/Library/Application Support/EasyFlex` (macOS) [README.md:31-32][EasyFlex/config.py:221-316].
+
+### Varianta B – ze zdrojového kódu
+1. V adresáři projektu vytvořte virtuální prostředí a nainstalujte závislosti:
+   ```powershell
+   py -m venv .venv
+   .\.venv\Scripts\Activate.ps1
+   pip install -r EasyFlex/requirements.txt
+   ```
+2. Spusťte aplikaci `python -m EasyFlex.main` [README.md:34-41].
+3. Volitelně vytvořte spustitelný soubor pomocí PyInstalleru `pyinstaller EasyFlex.spec` [README.md:43-48].
+
+### Aktualizace / vlastní build
+- Doporučený postup: vytvořit `.venv-build`, nainstalovat balíčky z `build/requirements-build.txt` a spustit `pyinstaller EasyFlex-windows.spec` nebo `pyinstaller EasyFlex-macos.spec`; po buildnutí otestovat spuštění z `dist/` [instructions.txt:3-31].
+- `DISTRIBUTION.md` popisuje tvorbu zip/tar.gz a čištění artefaktů [DISTRIBUTION.md:26-87].
+- Skripty `build/build_windows.ps1` a `build/build_macos.sh` nejsou součástí repozitáře → **NEDOSTUPNÉ**. Pro ověření si je vyžádejte od autora nebo přepište uvedené kroky do vlastních skriptů.
+
+## První spuštění a onboarding
+1. Spusťte EasyFlex; pokud chybí OpenAI API key, zobrazí se varování a tlačítka „Vybrat PDF/složku“ zůstanou šedá [EasyFlex/main.py:93-100][EasyFlex/gui.py:353-359].
+2. Otevřete `Nastavení` a projděte tři záložky (`Abra`, `Extractor`, `Extrakce`), vyplňte potřebné údaje a uložte [README.md:62-77][EasyFlex/gui.py:1496-1566].
+3. Po uložení se konfigurace načte znovu a extraktor dostane nové parametry; stav v hlavním okně se změní na „Nástroje připraveny“ [EasyFlex/gui.py:851-863][EasyFlex/gui.py:257-263].
+4. `[screenshot: Uvodni-okno]`
+
+## Konfigurace a nastavení
+Každé nastavení lze spravovat buď v dialogu `Nastavení`, nebo přes proměnné prostředí (override hodnot v INI) [EasyFlex/config.py:480-604]. Tabulka shrnuje význam:
+
+| Nastavení | Umístění | Výchozí hodnota | Účinek | Interakce / doporučení |
+| --- | --- | --- | --- | --- |
+| Server ABRA | `Nastavení → Abra → Server` [EasyFlex/gui.py:1676-1707] | prázdné | Základ URL pro všechny požadavky na FlexiBee [EasyFlex/abra.py:544-609] | Kombinujte s `Port`; vyžaduje HTTPS certifikát, držte `Ověřovat TLS certifikát` zapnuté |
+| Port ABRA | `Nastavení → Abra → Port` [EasyFlex/gui.py:1676-1707] | prázdné (`443` implicitně) | Přidává `:{port}` do URL [EasyFlex/abra.py:554-561] | Vyplňte jen pokud API běží na nestandardním portu |
+| Uživatel / Heslo | `Nastavení → Abra` [EasyFlex/gui.py:1676-1707] | prázdné | Základní autentizace pro API [EasyFlex/abra.py:555-563] | Chraňte soubor `settings.ini`; není šifrovaný |
+| Ověřovat TLS certifikát | `Nastavení → Abra` [EasyFlex/gui.py:1676-1707] | `true` | Určuje `verify` flag při HTTP requestech [EasyFlex/config.py:536-541][EasyFlex/abra.py:609-610] | Nevypínejte na produkci; jinak hrozí MITM |
+| Firma | Horní lišta `Firma` [EasyFlex/gui.py:326-790] | první uložená | Určuje segment `/c/{firma}/` v ABRA URL [EasyFlex/abra.py:573-609] | Použijte `Nová firma…` pro přidání a uloží se do `settings.ini` |
+| Směr | Horní lišta `Směr` [EasyFlex/gui.py:334-339] | `faktura-prijata` | Přepíná endpoint (`faktura-vydana` nastaví kód dokladu) [EasyFlex/abra.py:560-591] | Vyberte dle typu importovaných dokladů |
+| Typ dokladu | Horní lišta `Typ dokladu` [EasyFlex/gui.py:342-348] | `Nový typ…` | Nastavuje `typDokl` (`code:...`) v ABRA payloadu [EasyFlex/abra.py:578-585] | Pro vydané faktury je třeba interní kód, jinak se vygeneruje automaticky |
+| OpenAI API Key | `Nastavení → Extractor → API Key` [EasyFlex/gui.py:1496-1510] | prázdné | Ověření vůči OpenAI; bez něj nelze zpracovat PDF/segmentaci [EasyFlex/extractor.py:254-261] | Uložení je v prostém textu; doporučeno omezit přístup k souboru |
+| Model | `Nastavení → Extractor → Model` [EasyFlex/gui.py:1496-1510] | `gpt-4o` | Název modelu pro vision requesty, fallback na `gpt-4o-mini` [EasyFlex/config.py:518-525][EasyFlex/extractor.py:998-1115] | Pokud vyberete model bez Structured Outputs, extrakce selže |
+| Concurrency | `Nastavení → Extractor` [EasyFlex/gui.py:1496-1510] | `1` (INI) | Limit paralelních PDF při batch režimu (`asyncio.Semaphore`) [EasyFlex/config.py:512-519][EasyFlex/extractor.py:334-347] | Zvyšujte opatrně; respektujte API limity |
+| Max Tokens | `Nastavení → Extractor` [EasyFlex/gui.py:1496-1510] | `1024` | Horní hranice tokenů pro odpověď; při `finish_reason=length` se dynamicky navýší [EasyFlex/config.py:514-519][EasyFlex/extractor.py:1095-1115] | Vyšší limit = vyšší náklady |
+| PDF DPI | `Nastavení → Extractor` [EasyFlex/gui.py:1496-1510] | `200` | Rozlišení při konverzi PDF → PNG [EasyFlex/config.py:518-519][EasyFlex/extractor.py:704-711] | Vyšší DPI = pomalejší a dražší request |
+| Max Pages | `Nastavení → Extractor` [EasyFlex/gui.py:1496-1510] | `2` | Omezuje počet stran poslaných do OpenAI [EasyFlex/config.py:517-519][EasyFlex/extractor.py:281-284] | Pro více stran zvyšte, ale sledujte náklady |
+| Request Delay | `Nastavení → Extractor` [EasyFlex/gui.py:1496-1510] | `0.5` s | Minimální mezera mezi požadavky (lokální i globální throttle) [EasyFlex/config.py:483-499][EasyFlex/extractor.py:1187-1208] | Při rate-limit chybách zvýšit |
+| Max Retries | `Nastavení → Extractor` [EasyFlex/gui.py:1496-1510] | `5` | Počet pokusů o volání OpenAI (i pro segmentaci) [EasyFlex/config.py:483-487][EasyFlex/extractor.py:1058-1160] | Nadměrné zvýšení prodlužuje odezvu |
+| Max šířka obrázků | `Nastavení → Extractor` [EasyFlex/gui.py:1496-1508] | `1600` px | Zmenší obrázky před odesláním kvůli velikosti payloadu [EasyFlex/config.py:512-519][EasyFlex/extractor.py:724-739] | Pro drobná písma lze zvýšit |
+| JPEG kvalita | `Nastavení → Extractor` [EasyFlex/gui.py:1496-1508] | `85` | Komprese screenshotu stránek [EasyFlex/config.py:512-519][EasyFlex/extractor.py:724-739] | Nižší = menší data, horší OCR |
+| Auto-import do ABRA | `Nastavení → Extrakce` [EasyFlex/gui.py:1517-1523] | vypnuto | Po zpracování PDF/CSV spustí import na označené řádky [EasyFlex/gui.py:1131-1159][EasyFlex/gui.py:1181-1207] | Doporučeno nejprve otestovat ručně |
+| Použít číslo dokladu jako VS | `Nastavení → Extrakce` [EasyFlex/gui.py:1525-1531] | vypnuto | Při extrakci vyplní variabilní symbol číslem faktury [EasyFlex/config.py:543-547][EasyFlex/extractor.py:287-293] | Vhodné pokud VS chybí na faktuře |
+| Domyšlení chybějících datumů | `Nastavení → Extrakce` [EasyFlex/gui.py:1532-1537] | vypnuto | Vyplní chybějící DUZP/splatnost a přidá upozornění [EasyFlex/config.py:548-554][EasyFlex/date_helpers.py:74-156][EasyFlex/abra.py:480-541] | Sledujte hlášky v tabulce |
+| Formát dne a měsíce | `Nastavení → Extrakce` (radiobutton) [EasyFlex/gui.py:1539-1553] | `DD-MM` | Ovlivní parsování datumů (day-first vs month-first) [EasyFlex/config.py:558-564][EasyFlex/date_helpers.py:20-71] | Při amerických formátech zvolte `MM-DD` |
+| Segmentace více faktur | `Nastavení → Extrakce` [EasyFlex/gui.py:1556-1561] | vypnuto | U PDF s více fakturami spustí detekci bloků [EasyFlex/config.py:554-556][EasyFlex/extractor.py:142-381] | Vyžaduje kvalitní skeny; při problémech vypněte |
+| LLM mapování CSV | `Nastavení → Extrakce` [EasyFlex/gui.py:1562-1566] | zapnuto v INI, ale závisí na API klíči | Dovolí posílat hlavičky + vzorek řádků do OpenAI pro přesnější mapu sloupců [EasyFlex/config.py:566-569][EasyFlex/csv_processor.py:704-718][LLM_mapovani_popis.txt:1-112] | Vypněte pro citlivá data nebo pokud máte standardní šablonu |
+| POPPLER_PATH (ENV) | Proměnná prostředí / `settings.ini` [README.md:22-23][EasyFlex/config.py:512-520] | auto-detekce | Přepisuje cestu k `pdftoppm` pokud Poppler není v balíčku | Ověřte instalaci Poppleru (Windows: složka `poppler-25.07.0`) |
+
+> `[screenshot: Nastaveni-Extractor]`
+
+## Práce s daty
+### Import PDF
+1. Klikněte `Vybrat PDF` a zvolte soubor; aplikace spustí extraktor v pozadí, stav se zobrazuje v progress bar [EasyFlex/gui.py:295-306][EasyFlex/gui.py:864-868].
+2. Výsledná tabulka obsahuje základní údaje, sloupec „Import“ přepíná ✓/✗ pro nahrání do ABRA [EasyFlex/gui.py:870-897].
+
+### Hromadné PDF (složka)
+- `Vybrat složku` → `batch_extract` s postupným reportem (callback `on_progress`) [EasyFlex/gui.py:1088-1099][EasyFlex/extractor.py:310-354].
+- Při zapnutém auto-importu se každá chybějící faktura importuje ihned po naplnění tabulky [EasyFlex/gui.py:1181-1207].
+
+### Import tabulek (CSV/XLSX/XML)
+1. `Vybrat tabulku` přijímá více formátů, interně se detekuje kódování a typ souboru [EasyFlex/gui.py:1099-1108][EasyFlex/csv_processor.py:270-369].
+2. Sloupce se mapují heuristicky nebo pomocí LLM; varování o doplněných datech se zobrazí ve sloupci `Upozornění` [EasyFlex/csv_processor.py:684-722][EasyFlex/date_helpers.py:74-156].
+3. Auto-import pro CSV používá aktuální hodnoty z tabulky (včetně ručních úprav) [EasyFlex/gui.py:1131-1159].
+
+### Ruční úpravy a výběr řádků
+- Dvojklik otevře editační dialog; změna se projeví v DataFrame a může vyvolat přetřídění [EasyFlex/gui.py:1243-1268].
+- Klik na ikonku ✓/✗ přepíná import flag; zohledňuje se při auto-importu i ručním importu [EasyFlex/gui.py:1273-1294].
+- Export aktuální tabulky do CSV přes `Exportovat CSV`; běží v background threadu [EasyFlex/gui.py:1211-1233].
+
+### Import do ABRA Flexi
+- Ručně: tlačítko `Importovat do ABRA` odešle aktuálně označené řádky (přes `import_to_abra`) [EasyFlex/gui.py:317-318][EasyFlex/gui.py:932-1072].
+- Automaticky: zapněte `Auto-import do ABRA` v nastavení; import proběhne po každé dávce [EasyFlex/gui.py:1131-1159][EasyFlex/gui.py:1181-1207].
+- Chyby najdete v `errors/abra_error_*.json` společně s odpovědí serveru [EasyFlex/abra.py:625-632].
+
+### Zálohy a obnova
+- Zálohovat `settings.ini`, složku `errors`, případně `cache/` (pro opakované PDF) z profilu `EasyFlex` [README.md:107-114][EasyFlex/config.py:221-323].
+- Pro reset konfigurace smažte `settings.ini`; při dalším spuštění se vytvoří z výchozí šablony [EasyFlex/config.py:210-338].
+
+## Scénáře použití
+### Scénář 1 – Ruční kontrola jedné PDF faktury a import
+1. `Vybrat PDF` → otevřít soubor [EasyFlex/gui.py:295-299].
+2. Počkejte na zobrazení výsledků, zkontrolujte vyplněná pole (případně upravte dvojklikem) [EasyFlex/gui.py:870-897][EasyFlex/gui.py:1243-1268].
+3. Nastavte `Firma` / `Směr` / `Typ dokladu` dle ABRA účtu [EasyFlex/gui.py:326-347].
+4. Klikněte `Importovat do ABRA` → stav v liště, případný výsledek/varování dialogem [EasyFlex/gui.py:932-1072].
+5. `[screenshot: Tabulka-po-extrakci]`
+
+### Scénář 2 – Hromadný import CSV s auto-importem
+1. V `Nastavení → Extrakce` zapněte `Auto-import do ABRA` a (dle potřeby) `LLM mapování CSV` [EasyFlex/gui.py:1517-1566].
+2. Přes horní lištu vyberte firmu a typ dokladu, uložte nastavení [EasyFlex/gui.py:748-807].
+3. `Vybrat tabulku` → zvolte CSV/XLSX; zkontrolujte, že sloupce byly správně namapovány (viz varování) [EasyFlex/gui.py:1099-1130][EasyFlex/csv_processor.py:684-722].
+4. Aplikace automaticky odešle řádky s ✓ do ABRA, souhrn zobrazí varování `Import hotov: ...` [EasyFlex/gui.py:1131-1159].
+5. Ověřte logy v `Nastavení → Admin → Otevřít log konzoli` při řešení problémů [EasyFlex/gui.py:1600-1639].
+
+## Řešení potíží
+- **PDF tlačítka šedá** – doplňte OpenAI API Key v `Nastavení → Extractor` [README.md:126-129][EasyFlex/gui.py:353-359].
+- **Chyba převodu PDF** – zkontrolujte instalaci Poppleru nebo nastavte `POPPLER_PATH` [README.md:131-133][EasyFlex/config.py:264-300].
+- **„company code is not configured“** – vyberte firmu v horní liště nebo přidejte novou [README.md:134-136][EasyFlex/gui.py:326-790].
+- **HTTP chyby 401/403/404** – ověřte server, port a přihlašovací údaje; detail naleznete v JSON logu v `errors/` [README.md:137-141][EasyFlex/abra.py:361-399][EasyFlex/abra.py:625-632].
+- **Chybné mapování CSV** – vypněte LLM mapování a přejmenujte sloupce podle šablony v `template.txt` nebo doplňte synonyma v CSV [template.txt:1-15][LLM_mapovani_popis.txt:1-112].
+
+## FAQ a best practices
+- Jak upravit hodnoty před importem? → Dvojklik v tabulce, poté ručně importovat [README.md:88-100][EasyFlex/gui.py:1243-1268].
+- Kde vidím logy? → `Nastavení → Admin → Otevřít log konzoli`; logy se obnovují každé 2 s [EasyFlex/gui.py:1600-1655][EasyFlex/config.py:187-213].
+- Jak ušetřit náklady na OpenAI? → Snižte `PDF DPI`, `Max Pages`, případně vypněte segmentaci a LLM mapování [EasyFlex/extractor.py:281-295][EasyFlex/gui.py:1556-1566].
+- Co když tabulka používá nestandardní názvy sloupců? → Zapněte `LLM mapování` nebo použijte poskytnutou CSV šablonu [LLM_mapovani_popis.txt:1-112][template.txt:1-15].
+- Přístupové údaje/nešifrované soubory → Zajistěte omezený přístup k profilu a pravidelně měňte API klíče [README.md:118-122].
+
+## Doporučené pracovní postupy
+1. **Testovací režim** – před auto-importem otestujte několik faktur ručně, sledujte JSON logy ABRA [EasyFlex/gui.py:317-318][EasyFlex/abra.py:625-632].
+2. **Zálohování** – pravidelně kopírujte `settings.ini`, `errors/` a `cache/` (umožní obnovit konfiguraci a sledovat chyby) [README.md:107-114][EasyFlex/config.py:221-323].
+3. **Segmentace** – používejte jen pro PDF se zřetelně oddělenými fakturami; při nejasnostech zůstaňte u single-mode [EasyFlex/extractor.py:356-387].
+4. **Bezpečnost** – nevypínejte TLS ověření, nepovolujte LLM mapování na citlivých datech bez souhlasu [EasyFlex/gui.py:1676-1707][EasyFlex/csv_processor.py:704-718].
+

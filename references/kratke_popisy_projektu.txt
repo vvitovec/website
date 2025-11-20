@@ -1,0 +1,103 @@
+Projekty:
+
+1.EasyFlex
+
+
+
+Vyvinul jsem aplikaci EasyFlex pro automatizaci účetní práce.
+
+Umí převést faktury z PDF nebo CSV → přímo do účetního programu, bez nutnosti zdlouhavého přepisování jednotlivých faktur.
+
+
+
+🔹 Aktuálně funguje s Abra Flexi, ale je možné ji přizpůsobit pro jakýkoliv účetní program s API.
+
+🔹 Manuální úpravy a import jen vybraných položek
+
+🔹 Import do konkrétní firmy a přiřazení typu dokladu
+
+🔹 Chytrá logika s upozorněním na nesrovnalosti
+
+
+
+Aplikaci testuje Albac s. r. o. (účetní a daňové poradenství). EasyFlex je plně funkční a budu ji dál vylepšovat či přidávat nové funkce podle zpětné vazby.
+
+
+
+Kdyby vás cokoliv zajímalo, dejte vědět – rád se podělím o detaily. (Nápady na další funkce jsou také vítány)
+
+
+
+2.Predikce cen nemovitostí
+
+
+
+Právě jsem dokončil projekt predikce cen nemovitostí pomocí strojového učení. Data jsem sbíral přes vlastní webscraper, model trénoval s XGBoost a výsledky jsem zpřístupnil ve webové aplikaci. Byla to osobní výzva pro rozšíření obzorů a procvičení programování v Pythonu, práce s daty a interface + deployment webové aplikace.
+
+
+
+Webová aplikace je pro vyzkoušení dostupná na: https://realestatepredict.streamlit.app/ kde stačí zadat informace o nemovitosti a program vám řekne odhadovanou cenu.
+
+
+
+#datascience #machinelearning #python #it #freelance #project #webapp
+
+
+
+3.Apartmány Javorná
+
+
+
+Pro Apartmány Javorná jsem osobně vymyslel, natočil, sestříhal a nadaboval videa pro jejich instagramový účet.
+
+
+Pro Apartmány Javorná jsem vytovřil vše od letáků, přes dárkové poukázky, až po digitálního průvodce apartmány. 
+
+
+Jestli máte také zájem o profesionální videa vytvořená na míru pro zviditelnění a upozornění na Vás v online světě, kontaktujte mě do zpráv na instagramu, nebo přes email.
+
+
+
+#freelance #freelancer #videa #reels #instagram #tvorbaobsahu #apartmány #příroda
+
+
+
+4.Web Reality Brož
+
+
+
+Pro realitního makléře Pavla Brože jsem vytovřil webové stránky, které mu tovří skvělou online prezentaci a inzerují jeho služby výkupu a prodeje nemovitostí.
+
+
+
+Chcete i Vy profesionálně vypadající stránky pro Vaši firmu, nebo byznys. Kontaktujte mě prostřednictvím zpráv na instagramu, nebo pomocí e-mailu a já s Vámi rád proberu co Vám mohu nabídnout, nebo poradím.
+
+
+
+#freelance #freelancer #web #webpage #webovéstránky #reality #nemovitosti #firma #byznys #prezentace #online
+
+
+
+
+
+5.Reklamní Brožury Atira
+
+
+
+Pro firmu Atira jsem vyhotovil různé reklamní brožury využitelné pro online prezentaci nemovitostí a projektů.
+
+
+
+Pokud máte zájem o podobnou spolupráci, nebo chcete jen konzultaci, napište mi do zpráv na Instagramu nebo na e-mail.
+
+
+
+#freelance #freelancer #design #presentacion #nemovitosti #prodej
+
+
+
+6.Solis Youtube
+
+Spolupracuji s firmou Solis, pro kterou edituji videa ve formátu pro YouTube
+
+#freelance #freelancer #youtube #video
