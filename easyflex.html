@@ -3,23 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EasyFlex – program pro flexibilitu</title>
+  <title>EasyFlex | Automatizace faktur</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Sdílená hlavička -->
   <header class="site-header">
     <div class="container header-inner">
-      <div class="brand">Můj kreativní svět</div>
+      <div class="brand">Viktor Vítovec</div>
       <button class="menu-toggle" aria-label="Otevřít menu" aria-expanded="false">☰</button>
       <nav class="main-nav" aria-label="Hlavní navigace">
         <ul>
           <li><a href="/index.html#about">O mně</a></li>
-          <li><a href="/index.html#content">Tvorba digitálního obsahu</a></li>
-          <li><a href="/easyflex.html" aria-current="page">Program EasyFlex</a></li>
+          <li><a href="/index.html#projects">Projekty</a></li>
+          <li><a href="/easyflex.html" aria-current="page">EasyFlex</a></li>
           <li><a href="#contact">Kontakt</a></li>
         </ul>
       </nav>
@@ -27,137 +26,76 @@
   </header>
 
   <main>
-    <!-- Hero sekce EasyFlex -->
     <section class="hero easyflex-hero">
       <div class="container hero-grid">
         <div>
-          <p class="eyebrow">Program na míru</p>
-          <h1>EasyFlex – program pro lepší flexibilitu a pohyb</h1>
-          <p class="lead">EasyFlex kombinuje krátké tréninky, jasné postupy a podporu, která ti pomůže rozhýbat tělo i během nabitého dne.</p>
+          <p class="eyebrow">Automatizace účetnictví</p>
+          <h1>EasyFlex převádí faktury z PDF a CSV přímo do účetního programu</h1>
+          <p class="lead">Aplikace, kterou testuje účetní společnost Albac s.r.o. Umí číst PDF přes OpenAI, zpracovat tabulky, upozornit na nesrovnalosti a poslat jen vybrané faktury do ABRA Flexi.</p>
           <div class="actions">
-            <a class="button" href="#contact">Poptat EasyFlex</a>
-            <a class="button ghost" href="#how">Jak to funguje</a>
+            <a class="button" href="#contact">Chci EasyFlex</a>
+            <a class="button ghost" href="#features">Co umí</a>
           </div>
         </div>
         <div class="hero-card">
-          <p>Co řeší</p>
-          <h3>Stuhlost, nedostatek času, nepravidelnost</h3>
-          <p>Program je stavěný pro kreativce a lidi pracující online. Přinese jasný plán, který zapadne do tvého rytmu.</p>
+          <p>Hlavní přínos</p>
+          <h3>Méně ručního přepisu, rychlejší import</h3>
+          <p>Importujte PDF i tabulky bez zdlouhavého opisování. EasyFlex řeší souhrny DPH, základní identifikační údaje a umožní ruční úpravy před odesláním do ABRA.</p>
         </div>
       </div>
     </section>
 
-    <!-- Co je EasyFlex -->
-    <section class="section" id="about-program">
+    <section class="section" id="features">
       <div class="container two-col">
         <div>
-          <h2>Co je EasyFlex</h2>
-          <p>EasyFlex je praktický program zaměřený na zlepšení mobility a zdravých návyků v pohybu. Vhodný je pro lidi, kteří chtějí cvičit krátce, ale efektivně.</p>
+          <h2>Co EasyFlex dokáže</h2>
           <ul class="list">
-            <li><strong>Pro koho:</strong> tvůrci, freelanceři, kancelářští profesionálové, kteří potřebují pravidelný pohyb.</li>
-            <li><strong>Jak probíhá:</strong> krátké lekce, jasné postupy a kontrolní seznamy, které můžeš následovat svým tempem.</li>
-            <li><strong>Co získáš:</strong> více volnosti v pohybu, méně napětí v těle a jasné rituály, jak se hýbat každý den.</li>
+            <li><strong>PDF → účetní program:</strong> extrakce přes OpenAI Vision a převod přímo do ABRA Flexi.</li>
+            <li><strong>Import tabulek:</strong> načte CSV/XLSX/XML, umožní ruční úpravy buněk a import jen vybraných řádků.</li>
+            <li><strong>Chytrá logika:</strong> hlídá souhrny DPH, variabilní symboly i datumy a upozorní na nesrovnalosti.</li>
+            <li><strong>Flexibilní nastavení:</strong> import do konkrétní firmy, výběr typu dokladu, možnost automatického importu.</li>
           </ul>
         </div>
         <div class="highlight-box">
-          <h3>Hlavní výhody</h3>
-          <ul class="checklist">
-            <li>Krátké lekce, které zvládneš i mezi meetingy</li>
-            <li>Videonávody a taháky ke stažení</li>
-            <li>Podpora a možnost konzultací</li>
-            <li>Jasný startovní plán na prvních 30 dní</li>
-          </ul>
+          <h3>Proč vznikl</h3>
+          <p>EasyFlex jsem vytvořil pro účetní týmy, které potřebují zrychlit opsání údajů z faktur bez ztráty kontroly. Aplikace je plně funkční a průběžně ji vylepšuji podle zpětné vazby z praxe.</p>
+          <p>Primárně podporuje ABRA Flexi, ale můžu ji přizpůsobit na jakýkoliv účetní program s API.</p>
         </div>
       </div>
     </section>
 
-    <!-- Součásti programu -->
-    <section class="section muted" id="features">
+    <section class="section muted" id="process">
       <div class="container">
-        <h2>Co je součástí programu</h2>
-        <div class="cards four">
-          <article class="card">
-            <div class="icon">💻</div>
-            <h3>Online lekce</h3>
-            <p>Živá i nahraná setkání, která tě provedou jednotlivými bloky.</p>
-          </article>
-          <article class="card">
-            <div class="icon">🎥</div>
-            <h3>Videonávody</h3>
-            <p>Krátká videa s konkrétními cviky a tipy, jak je provádět správně.</p>
-          </article>
-          <article class="card">
-            <div class="icon">📄</div>
-            <h3>Podpůrné materiály</h3>
-            <p>Checklisty, taháky a plánovače, které pomohou udržet tempo.</p>
-          </article>
-          <article class="card">
-            <div class="icon">🤝</div>
-            <h3>Komunita & podpora</h3>
-            <p>Prostor pro otázky, sdílení zkušeností a motivaci do dalších kroků.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- Jak program funguje -->
-    <section class="section" id="how">
-      <div class="container">
-        <h2>Jak program funguje</h2>
+        <h2>Jak probíhá práce s EasyFlex</h2>
         <ol class="steps">
-          <li><strong>Poptáš program.</strong> Vyplň formulář a ozvu se s nejbližším termínem.</li>
-          <li><strong>Spojíme se.</strong> Krátký call nebo e-mail, kde nastavíme cíle a dostupný čas.</li>
-          <li><strong>Začínáš cvičit.</strong> Dostaneš první lekce, plán a průvodce, jak vše začlenit do dne.</li>
-          <li><strong>Pravidelná zpětná vazba.</strong> Podpora, aby ses držel/a plánu a viděl/a pokrok.</li>
+          <li>Nastavíte přístup do účetního systému a potřebné parametry importu.</li>
+          <li>Vyberete PDF nebo tabulku; EasyFlex vytěží data a zobrazí je v přehledné tabulce.</li>
+          <li>Podle potřeby ručně upravíte řádky a zvolíte, co se má importovat.</li>
+          <li>Spustíte import do ABRA Flexi – automaticky nebo manuálně jen pro označené položky.</li>
         </ol>
       </div>
     </section>
 
-    <!-- Reference -->
-    <section class="section muted" id="references">
-      <div class="container">
-        <h2>Reference</h2>
-        <div class="cards three">
-          <article class="card">
-            <p class="quote">„Po dvou týdnech se mi lépe sedí u počítače a zmizela bolest šíje.“</p>
-            <p class="author">– Jana, digitální ilustrátorka</p>
-          </article>
-          <article class="card">
-            <p class="quote">„Krátké bloky cvičení konečně zapadly do mého kalendáře. Vydržím se soustředit déle.“</p>
-            <p class="author">– Petr, videoeditor</p>
-          </article>
-          <article class="card">
-            <p class="quote">„Líbí se mi jasný plán a podpora. Konečně mám rutinu, která dává smysl.“</p>
-            <p class="author">– Lenka, freelance marketérka</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- Poptávkový formulář -->
     <section class="section" id="contact">
       <div class="container two-col">
         <div>
-          <h2>Poptat EasyFlex</h2>
-          <p>Dej mi vědět, co tě zajímá. Ozvu se a domluvíme detaily.</p>
-          <form id="inquiry-form" class="form" method="POST" action="#">
-            <label for="name">Jméno</label>
-            <input type="text" id="name" name="name" required placeholder="Tvoje jméno">
-
-            <label for="email">E-mail</label>
-            <input type="email" id="email" name="email" required placeholder="tvoje@email.cz">
-
-            <label for="message">Zpráva / co bych o programu rád věděl</label>
-            <textarea id="message" name="message" rows="4" placeholder="Napiš, co tě zajímá"></textarea>
-
-            <button type="submit" class="button">Odeslat poptávku</button>
-            <p class="form-feedback" role="status" aria-live="polite"></p>
-          </form>
+          <p class="eyebrow">Poptávka</p>
+          <h2>Zajímá vás EasyFlex?</h2>
+          <p>Odepište mi s krátkým popisem vašeho účetního systému a očekávaného objemu faktur. Pošlu vám demo a navrhnu nastavení na míru.</p>
+          <div class="contact-block">
+            <a class="button" href="mailto:vvitovec27@gmail.com">Napsat e-mail</a>
+            <a class="button ghost" href="tel:+420774943304">Zavolat</a>
+          </div>
+          <p class="contact-note">E-mail: <a href="mailto:vvitovec27@gmail.com">vvitovec27@gmail.com</a><br>Telefon: <a href="tel:+420774943304">+420 774 943 304</a></p>
         </div>
         <div class="highlight-box">
-          <h3>Rychlý kontakt</h3>
-          <p>Preferuješ e-mail? Napiš na <a href="mailto:ahoj@example.com">ahoj@example.com</a>.</p>
-          <p>Můžeš přidat i odkaz na svůj kalendář nebo sociální sítě.</p>
+          <h3>Co můžeme probrat</h3>
+          <ul class="checklist">
+            <li>Napojení na váš účetní program (ABRA nebo jiné API)</li>
+            <li>Specifické formáty faktur a tabulek</li>
+            <li>Automatické vs. manuální importy</li>
+            <li>Plánování nových funkcí podle vašich procesů</li>
+          </ul>
         </div>
       </div>
     </section>
@@ -165,7 +103,7 @@
 
   <footer class="site-footer">
     <div class="container">
-      <p>© 2024 – Osobní brand. Všechna práva vyhrazena.</p>
+      <p>© 2024 Viktor Vítovec. Všechna práva vyhrazena.</p>
     </div>
   </footer>
 
