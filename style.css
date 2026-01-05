@@ -329,6 +329,28 @@ a:hover {
   border-block: 1px solid var(--border);
 }
 
+.live-status .status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: #ecfdf3;
+  color: #166534;
+  font-weight: 700;
+  border: 1px solid #bbf7d0;
+  margin-bottom: 12px;
+}
+
+.live-status .status-pill::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.16);
+}
+
 .section h2 {
   margin-top: 0;
   margin-bottom: 16px;
